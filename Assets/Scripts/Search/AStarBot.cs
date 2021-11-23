@@ -31,7 +31,7 @@ namespace Search
             var path = AStarFromGoogle.FindPath(_map, @from, to);
             var nextPathPoint = path.Count >= 2 ? path[1] : to;
             nextPathPoint = new Vector2Int(nextPathPoint.x - _deltaX, nextPathPoint.y - _deltaZ);
-
+            
             var moveDirection = new Vector3(nextPathPoint.x, playerPosition.y, nextPathPoint.y) - playerPosition;
             var directVector = targetPosition - playerPosition;
 

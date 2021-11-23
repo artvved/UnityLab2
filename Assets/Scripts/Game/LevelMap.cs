@@ -13,36 +13,44 @@ namespace Game
 
         [SerializeField] private List<Vector3> _points;
 
+        public Transform Root => _root;
+
         public IReadOnlyList<Vector3> Points => _points;
 
-        [MenuItem("CONTEXT/LevelMap/Instantiate Points")]
-        private static void InstantiatePoints(MenuCommand command)
+        [ContextMenu("Instantiate objects")]
+        private void InstantiatePoints()
         {
-            Clear(command);
-
-            var levelMap = command.context as LevelMap;
-            if (levelMap == null)
-                return;
-
-            foreach (var p in levelMap._points.Distinct())
+            Clear();
+            foreach (var p in _points.Distinct())
             {
-                var prefab = PrefabUtility.InstantiatePrefab(levelMap._prefab, levelMap._root) as GameObject;
+                var prefab = PrefabUtility.InstantiatePrefab(_prefab, _root) as GameObject;
                 prefab.transform.position = p;
             }
         }
 
-        [MenuItem("CONTEXT/LevelMap/Clear Points")]
-        private static void Clear(MenuCommand command)
-        {
-            var levelMap = command.context as LevelMap;
-            if (levelMap == null)
-                return;
 
-            var count = levelMap._root.childCount;
+        [ContextMenu("Clear objects")]
+        private void Clear()
+        {
+            var count = _root.childCount;
             for (var i = count - 1; i >= 0; i--)
             {
-                DestroyImmediate(levelMap._root.GetChild(i).gameObject);
+                DestroyImmediate(_root.GetChild(i).gameObject);
             }
         }
+
+       
+
+        public void ClearAndInitPoints(List<Vector3> pointsList)
+        {
+            _points = new List<Vector3>();
+            for (int i = 0; i < pointsList.Count; i++)
+            {
+                var p= pointsList[i];
+                _points.Add(new Vector3((int)p.x,(int)p.y,(int)p.z));
+            }
+
+        }
+        
     }
 }

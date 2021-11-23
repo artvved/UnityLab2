@@ -2,6 +2,7 @@ using System.Linq;
 using Game;
 using UnityEngine;
 
+
 public class SimpleBotInput : PlayerInput
 {
     [SerializeField] private ZombieMap _zombieMap;

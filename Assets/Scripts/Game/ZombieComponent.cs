@@ -13,10 +13,10 @@ namespace Game
         [SerializeField] private float _awareSpeed = 5f;
 
         [SerializeField] private Rigidbody _rigidbody;
-        [SerializeField] private PlayerInput _zombieBot;
+        [SerializeField] private ZombieBot _zombieBot;
 
         [SerializeField] private Vector3[] _deltaPath;
-        public bool IsAware { get; set; } = false;
+        
 
         private int _currentPoint = 0;
         private Vector3 _initPosition;
@@ -35,7 +35,7 @@ namespace Game
         {
             if (_zombieBot == null || !IsAlive)
                 return;
-            if (!IsAware)
+            if (!_zombieBot.IsAware)
             {
                 IdleMove();
             }

@@ -10,20 +10,18 @@ namespace Search
 {
     public class ZombieBot : PlayerInput
     {
-        [SerializeField] private ZombieComponent _zombieComponent;
-        private Transform _zombie;
+        
+        [SerializeField] private Transform _zombie;
         private Transform _player;
         private bool canChangeDirection = true;
         private Vector3 direction = Vector3.zero;
+        public bool IsAware { get; set; } = false;
 
-        private void Awake()
-        {
-            _zombie = _zombieComponent.transform;
-        }
+       
 
         public override (Vector3 moveDirection, Quaternion viewDirection, bool shoot) CurrentInput()
         {
-            if (!_zombieComponent.IsAware)
+            if (!IsAware)
             {
                 return (Vector3.zero, _zombie.rotation, false);
             }
@@ -46,13 +44,13 @@ namespace Search
 
         public void Aware(Transform transform)
         {
-            _zombieComponent.IsAware = true;
+            IsAware = true;
             _player = transform;
         }
 
         public void Disaware()
         {
-            _zombieComponent.IsAware = false;
+            IsAware = false;
         }
 
         private IEnumerator WaitAndChangeDirection()
